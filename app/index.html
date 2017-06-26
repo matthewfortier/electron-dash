@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Speedometer</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <section id="speedo">
+            <div id="speedo-content">
+                <h1>0</h1>
+            </div>
+        </section>
+        <svg>
+            <circle class="outer" cx="200" cy="200" r="190"/>
+        </svg>
+    </body>
+
+    <script>
+        var $ = require('jquery');
+
+        const remote = require('electron').remote;
+        const main = remote.require('./main.js');
+        var ipcRenderer = require('electron').ipcRenderer;        
+
+        $('body').click(function(){
+            main.start();
+        });
+
+        ipcRenderer.on('speed', (event, data) =>{
+            $('#speedo-content h1').text(data);
+
+            if (data >= 70)
+                $('#speedo, #speedo-content h1').addClass('red');
+            else
+                $('#speedo, #speedo-content h1').removeClass('red');
+                                
+        });
+    </script>
+</html>
