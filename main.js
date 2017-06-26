@@ -24,17 +24,22 @@ exports.loadPage = (page) => {
 exports.start = () => {
    
     var speed = 0;
+    var rpmRotation = 1200;
 
     setInterval(function(){
 
         try {
             mainWindow.webContents.send('speed', speed);                                                
+            mainWindow.webContents.send('rpm', rpmRotation);                                                
         } catch (error) {
             // Ignore this for now
         }
         if(speed++ >= 120)
             speed = 0;
 
+        rpmRotation -= 10
+        if(rpmRotation < 240)
+            rpmRotation = 1200;
     }, 50);
     
 }

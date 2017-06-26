@@ -37,5 +37,21 @@
                 $('#speedo, #speedo-content h1').removeClass('red');
                                 
         });
+
+        ipcRenderer.on('rpm', (event, data) =>{
+            console.log(data);
+
+            if(data <= 200) {
+                $("#speedo").removeClass("red");
+                $("#speedo-content h1").removeClass("red");
+                $(".outer").removeClass ("red");
+            }
+            if(data <= 400) {
+                $("#speedo").addClass("red");
+                $("#speedo-content h1").addClass("red");
+                $(".outer").addClass("red");
+            }
+            $(".outer").css("stroke-dashoffset", data);               
+        });
     </script>
 </html>
